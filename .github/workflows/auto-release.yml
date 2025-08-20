@@ -60,7 +60,16 @@ jobs:
         id: bump
         run: |
           CURRENT_VERSION=$(node -p "require('./package.json').version")
-          NEW_VERSION=$(npm version ${{ steps.version.outputs.bump }} --no-git-tag-version)
+          
+          # 🎉 FIRST RELEASE LOGIC: If 0.0.0, always go to 1.0.0
+          if [ "$CURRENT_VERSION" = "0.0.0" ]; then
+            NEW_VERSION=$(npm version 1.0.0 --no-git-tag-version)
+            echo "🎉 FIRST RELEASE: Bumping directly to v1.0.0"
+          else
+            NEW_VERSION=$(npm version ${{ steps.version.outputs.bump }} --no-git-tag-version)
+            echo "📈 Regular version bump: ${{ steps.version.outputs.bump }}"
+          fi
+          
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "current_version=v$CURRENT_VERSION" >> $GITHUB_OUTPUT
           echo "📦 Version bump: v$CURRENT_VERSION → $NEW_VERSION"

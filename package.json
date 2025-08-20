@@ -1,6 +1,6 @@
 {
   "name": "@codechu/flow-core-container",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
   "description": "Flow ecosystem container abstractions - Pure interfaces for dependency injection and service location with zero logic",
   "keywords": [
