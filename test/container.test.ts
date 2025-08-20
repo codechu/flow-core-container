@@ -8,6 +8,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import type {
   IFlowContainer,
+  IFlowScope,
   IFlowServiceMetadata,
   IFlowServiceRegistration,
   IFlowServiceProvider,
@@ -602,6 +603,33 @@ describe('Flow Core Container Interfaces', () => {
       
       registry.clear();
       assert.strictEqual(registry.size, 0);
+    });
+  });
+
+  describe('IFlowScope', () => {
+    it('should implement scoped dependency resolution interface', () => {
+      // Test interface compliance
+      const mockScope: IFlowScope = {
+        id: Symbol('test-scope'),
+        parent: undefined,
+        children: [],
+        container: {} as IFlowContainer,
+        isDisposed: false,
+        createChildScope: () => mockScope,
+        hasService: (token: string | symbol) => false,
+        getService: async <T>(token: string | symbol): Promise<T> => ({} as T),
+        clear: async () => {},
+        dispose: async () => {}
+      };
+
+      assert.strictEqual(typeof mockScope.id, 'symbol');
+      assert.strictEqual(mockScope.parent, undefined);
+      assert.strictEqual(Array.isArray(mockScope.children), true);
+      assert.strictEqual(typeof mockScope.createChildScope, 'function');
+      assert.strictEqual(typeof mockScope.hasService, 'function');
+      assert.strictEqual(typeof mockScope.getService, 'function');
+      assert.strictEqual(typeof mockScope.clear, 'function');
+      assert.strictEqual(typeof mockScope.dispose, 'function');
     });
   });
 });

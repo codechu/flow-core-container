@@ -36,10 +36,56 @@ For complete requirements, acceptance criteria, and project scope, see [REQUIREM
 
 Flow Core Container provides pure TypeScript interfaces for dependency injection and service location patterns with **zero implementation logic**. Build any IoC container implementation while maintaining complete type safety.
 
+## 📁 Modular Architecture (v1.1.0)
+
+The package is organized into 6 logical modules for better developer experience:
+
+```
+src/interfaces/
+├── container/     # Core container and scope interfaces
+│   ├── IFlowContainer.ts
+│   ├── IFlowScope.ts
+│   └── index.ts
+├── services/      # Service provider, locator, and registry  
+│   ├── IFlowServiceProvider.ts
+│   ├── IFlowServiceLocator.ts
+│   ├── IFlowServiceRegistry.ts
+│   └── index.ts
+├── lifecycle/     # Disposable and lifecycle hooks
+│   ├── IFlowDisposable.ts
+│   ├── IFlowServiceLifecycle.ts
+│   └── index.ts
+├── builders/      # Container builder, injectable, and modules
+│   ├── IFlowContainerBuilder.ts
+│   ├── IFlowInjectable.ts
+│   ├── IFlowContainerModule.ts
+│   └── index.ts
+├── configuration/ # Configuration and events
+│   ├── IFlowContainerConfig.ts
+│   ├── IFlowContainerEvents.ts
+│   └── index.ts
+└── advanced/      # Advanced container and service resolver
+    ├── IFlowAdvancedContainer.ts
+    ├── IFlowServiceResolver.ts
+    └── index.ts
+```
+
+### Import Examples
+
+```typescript
+// Import specific interfaces
+import { IFlowContainer, IFlowScope } from '@codechu/flow-core-container/container';
+import { IFlowServiceProvider, IFlowServiceLocator } from '@codechu/flow-core-container/services';
+
+// Import from main package (all interfaces)
+import { IFlowContainer, IFlowServiceProvider } from '@codechu/flow-core-container';
+```
+
 ## 🔧 Core Interfaces
 
 ### Container & Registry
 - `IFlowContainer` - Core dependency injection container
+- `IFlowScope` - **NEW in v1.1.0** - Scoped dependency resolution interface
 - `IFlowServiceRegistry` - Service registration management
 - `IFlowServiceResolver` - Advanced resolution with circular detection
 - `IFlowAdvancedContainer` - Full-featured container combining all capabilities
