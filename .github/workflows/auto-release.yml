@@ -36,24 +36,39 @@ jobs:
       - name: 🏗️ Build package
         run: npm run build
 
-      - name: 🔍 Analyze PR for version bump
+      - name: 🔍 Safe version detection with manual override
         id: version
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
-          PR_BODY="${{ github.event.pull_request.body }}"
           
           echo "🔍 Analyzing PR: $PR_TITLE"
           
-          # Check for breaking changes
-          if echo "$PR_TITLE $PR_BODY" | grep -iE "(BREAKING CHANGE|breaking:|major:|MAJOR)"; then
+          # 🎯 1. MANUAL OVERRIDE (highest priority)
+          if echo "$PR_TITLE" | grep -E "\[(patch|minor|major)\]"; then
+            MANUAL_VERSION=$(echo "$PR_TITLE" | grep -oE "(patch|minor|major)")
+            echo "bump=$MANUAL_VERSION" >> $GITHUB_OUTPUT
+            echo "🎯 MANUAL OVERRIDE: $MANUAL_VERSION"
+          
+          # 🔴 2. MAJOR - Exact prefix match only  
+          elif [[ "$PR_TITLE" == "BREAKING CHANGE:"* ]] || \
+               [[ "$PR_TITLE" == "breaking:"* ]] || \
+               [[ "$PR_TITLE" == "MAJOR:"* ]] || \
+               [[ "$PR_TITLE" == "NEW VERSION:"* ]]; then
             echo "bump=major" >> $GITHUB_OUTPUT
-            echo "📈 Detected MAJOR version bump"
-          elif echo "$PR_TITLE" | grep -iE "(feat:|feature:|minor:|MINOR)"; then
+            echo "🔴 MAJOR: Breaking change or new version"
+          
+          # 🟡 3. MINOR - Exact prefix match only
+          elif [[ "$PR_TITLE" == "feat:"* ]] || \
+               [[ "$PR_TITLE" == "feature:"* ]] || \
+               [[ "$PR_TITLE" == "add:"* ]] || \
+               [[ "$PR_TITLE" == "enhance:"* ]]; then
             echo "bump=minor" >> $GITHUB_OUTPUT
-            echo "📈 Detected MINOR version bump"
+            echo "🟡 MINOR: New feature"
+          
+          # 🟢 4. PATCH - Safe default
           else
             echo "bump=patch" >> $GITHUB_OUTPUT
-            echo "📈 Detected PATCH version bump"
+            echo "🟢 PATCH: Bug fix or maintenance (safe default)"
           fi
 
       - name: 📈 Bump version
