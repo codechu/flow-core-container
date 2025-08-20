@@ -95,32 +95,29 @@ jobs:
           PR_NUMBER="${{ github.event.pull_request.number }}"
           PR_TITLE="${{ github.event.pull_request.title }}"
           PR_AUTHOR="${{ github.event.pull_request.user.login }}"
-          PR_BODY="${{ github.event.pull_request.body }}"
           NEW_VERSION="${{ steps.bump.outputs.version }}"
           
-          RELEASE_NOTES="## 🎉 Release $NEW_VERSION
+          # Create release notes using direct file write to avoid shell escaping
+          cat > release_notes.md << 'EOF'
+          ## 🎉 Release ${{ steps.bump.outputs.version }}
 
-          **Merged PR:** $PR_TITLE (#$PR_NUMBER)
-          **Author:** @$PR_AUTHOR
+          **Merged PR:** ${{ github.event.pull_request.title }} (#${{ github.event.pull_request.number }})
+          **Author:** @${{ github.event.pull_request.user.login }}
           **Version Bump:** ${{ steps.version.outputs.bump }}
           
           ### 📋 Changes:
-          $PR_BODY
+          ${{ github.event.pull_request.body }}
           
           ---
           
           ### 📦 Installation:
-          \`\`\`bash
-          npm install @codechu/flow-core-container@$NEW_VERSION
-          \`\`\`
+          ```bash
+          npm install @codechu/flow-core-container@${{ steps.bump.outputs.version }}
+          ```
           
           ### 🔗 Links:
           - **NPM Package:** https://www.npmjs.com/package/@codechu/flow-core-container
-          - **Full Changelog:** https://github.com/${{ github.repository }}/compare/${{ steps.bump.outputs.current_version }}...$NEW_VERSION"
-          
-          # Save to file to avoid shell escaping issues
-          cat > release_notes.md << 'EOF'
-          $RELEASE_NOTES
+          - **Full Changelog:** https://github.com/${{ github.repository }}/compare/${{ steps.bump.outputs.current_version }}...${{ steps.bump.outputs.version }}
           EOF
           
           echo "Generated release notes for $NEW_VERSION"
