@@ -5,7 +5,38 @@ All notable changes to @codechu/flow-core-container will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - 2025-08-20
+## [1.0.0] - 2025-08-20
+
+### ✨ Initial Release - Pure Abstractions Architecture
+
+### Added
+- **Pure TypeScript Interfaces**: 20 comprehensive interfaces for DI/IoC patterns
+- **Zero Implementation Logic**: Maximum flexibility for any DI framework
+- **Bootstrap Strategy**: Users directed to `@codechu/flow-bootstrap` for ready-to-use implementations
+- **Modular Organization**: 6 logical interface groups (container, services, lifecycle, builders, configuration, advanced)
+- **Complete Type Safety**: Full TypeScript 5.5+ support with strict mode
+- **Interface Compliance**: 16 comprehensive tests validating all contracts
+
+### Core Interfaces
+- `IFlowContainer` - Primary DI container contract
+- `IFlowScope` - Scoped dependency resolution  
+- `IFlowServiceProvider` - Lazy service resolution
+- `IFlowServiceLocator` - Service lookup patterns
+- `IFlowContainerBuilder` - Fluent configuration
+- `IFlowServiceResolver` - Advanced resolution with circular detection
+- Full lifecycle, configuration, and advanced interfaces
+
+### Documentation
+- Complete architecture diagram showing bootstrap strategy
+- Professional README with quick start guide  
+- Modular import examples and usage patterns
+- Bootstrap package recommendation for easy onboarding
+
+### Quality
+- 16 interface compliance tests (100% pass rate)
+- TypeScript strict mode compliance
+- Node.js 18.x, 20.x, 22.x support
+- Zero external dependencies
 
 ### Added
 - New `IFlowScope` interface for scoped dependency resolution

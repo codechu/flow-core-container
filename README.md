@@ -22,6 +22,16 @@
 npm install @codechu/flow-core-container
 ```
 
+## 🚀 Quick Start
+
+**Need a ready-to-use implementation?** Install the bootstrap package:
+
+```bash
+npm install @codechu/flow-bootstrap
+```
+
+The bootstrap package includes reference implementations of all Flow ecosystem interfaces for easy onboarding.
+
 ## 🏗️ Architecture
 
 ![Architecture Overview](./architecture-diagram.svg)
@@ -36,12 +46,12 @@ For complete requirements, acceptance criteria, and project scope, see [REQUIREM
 
 Flow Core Container provides pure TypeScript interfaces for dependency injection and service location patterns with **zero implementation logic**. Build any IoC container implementation while maintaining complete type safety.
 
-## 📁 Modular Architecture (v1.1.0)
+## 📁 Modular Architecture (v1.0.0)
 
 The package is organized into 6 logical modules for better developer experience:
 
 ```
-src/interfaces/
+src/
 ├── container/     # Core container and scope interfaces
 │   ├── IFlowContainer.ts
 │   ├── IFlowScope.ts
@@ -73,12 +83,13 @@ src/interfaces/
 ### Import Examples
 
 ```typescript
-// Import specific interfaces
-import { IFlowContainer, IFlowScope } from '@codechu/flow-core-container/container';
-import { IFlowServiceProvider, IFlowServiceLocator } from '@codechu/flow-core-container/services';
-
 // Import from main package (all interfaces)
-import { IFlowContainer, IFlowServiceProvider } from '@codechu/flow-core-container';
+import { 
+  IFlowContainer, 
+  IFlowScope,
+  IFlowServiceProvider,
+  IFlowServiceLocator 
+} from '@codechu/flow-core-container';
 ```
 
 ## 🔧 Core Interfaces

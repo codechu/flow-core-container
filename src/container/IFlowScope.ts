@@ -14,7 +14,7 @@ export interface IFlowScope extends IFlowDisposable {
   /**
    * Parent scope (if any)
    */
-  readonly parent?: IFlowScope;
+  readonly parent?: IFlowScope | undefined;
 
   /**
    * Child scopes created from this scope

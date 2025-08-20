@@ -13,7 +13,7 @@ export type {
   IFlowScope,
   FlowServiceFactory,
   IFlowServiceMetadata
-} from './interfaces/container/index.js';
+} from './container/index.js';
 
 // Service interfaces
 export type {
@@ -21,14 +21,14 @@ export type {
   IFlowServiceLocator,
   IFlowServiceRegistry,
   IFlowServiceRegistration
-} from './interfaces/services/index.js';
+} from './services/index.js';
 
 // Lifecycle interfaces
 export type {
   IFlowDisposable,
   IFlowAsyncDisposable,
   IFlowServiceLifecycle
-} from './interfaces/lifecycle/index.js';
+} from './lifecycle/index.js';
 
 // Builder interfaces
 export type {
@@ -37,36 +37,19 @@ export type {
   IFlowAutoWireConfig,
   IFlowInjectMetadata,
   IFlowInjectable
-} from './interfaces/builders/index.js';
+} from './builders/index.js';
 
 // Configuration interfaces
 export type {
   IFlowContainerConfig,
   IFlowContainerEvents
-} from './interfaces/configuration/index.js';
+} from './configuration/index.js';
 
 // Advanced interfaces
 export type {
   IFlowServiceResolver,
   IFlowAdvancedContainer
-} from './interfaces/advanced/index.js';
+} from './advanced/index.js';
 
-// Type helpers
-export type {
-  ServiceToken,
-  InferServiceType,
-  ServiceMap,
-  ServiceRecord,
-  ExtractTokenType
-} from './types/index.js';
-
-// Export helper implementations
-export { SimpleContainer } from './helpers/SimpleContainer.js';
-export { ContainerBuilder } from './helpers/ContainerBuilder.js';
-export {
-  createToken,
-  createStringToken,
-  createUniqueToken,
-  TokenRegistry,
-  globalTokenRegistry
-} from './helpers/ServiceTokens.js';
+// Note: Helper implementations moved to @codechu/flow-bootstrap for unified easy-start experience
+// This package maintains pure abstractions only for maximum architectural flexibility

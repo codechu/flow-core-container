@@ -28,14 +28,8 @@ import type {
   InferServiceType
 } from '../dist/index.js';
 
-import {
-  SimpleContainer,
-  ContainerBuilder,
-  createToken,
-  createStringToken,
-  createUniqueToken,
-  TokenRegistry
-} from '../dist/index.js';
+// Note: Helper implementations moved to @codechu/flow-bootstrap
+// These tests now focus on interface compliance only
 import type { IFlowContext, FlowResult } from '@codechu/flow-core-seed';
 import { success, failure, flowError } from '@codechu/flow-core-seed';
 
@@ -508,103 +502,8 @@ describe('Flow Core Container Interfaces', () => {
     });
   });
 
-  describe('SimpleContainer Implementation', () => {
-    it('should work as a production-ready container', async () => {
-      const container = new SimpleContainer();
-      
-      // Register services with different scopes
-      container.register('Logger', async () => ({ log: vi => console.log(vi) }), { scope: 'singleton' });
-      container.register('Request', async () => ({ id: Math.random() }), { scope: 'transient' });
-      container.register('Session', async () => ({ userId: 'user123' }), { scope: 'scoped' });
-      
-      // Resolve services
-      const logger1 = await container.resolve('Logger');
-      const logger2 = await container.resolve('Logger');
-      assert.strictEqual(logger1, logger2); // Singleton
-      
-      const request1 = await container.resolve('Request');
-      const request2 = await container.resolve('Request');
-      assert.notStrictEqual(request1, request2); // Transient
-      
-      // Test scope
-      const scope = container.createScope();
-      const scopedSession1 = await scope.resolve('Session');
-      const scopedSession2 = await scope.resolve('Session');
-      assert.strictEqual(scopedSession1, scopedSession2); // Scoped singleton
-      
-      // Test disposal
-      assert.strictEqual(container.isDisposed, false);
-      await container.dispose();
-      assert.strictEqual(container.isDisposed, true);
-    });
-  });
-
-  describe('ContainerBuilder Implementation', () => {
-    it('should build container with fluent API', async () => {
-      const container = ContainerBuilder
-        .create()
-        .singleton('Logger', async () => ({ log: () => {} }))
-        .transient('Request', async () => ({ id: Date.now() }))
-        .scoped('Session', async () => ({ userId: 'user' }))
-        .build();
-      
-      assert.ok(container.has('Logger'));
-      assert.ok(container.has('Request'));
-      assert.ok(container.has('Session'));
-      
-      const logger = await container.resolve('Logger');
-      assert.ok(logger);
-    });
-  });
-
-  describe('Token Helpers', () => {
-    it('should create type-safe tokens', () => {
-      interface ITestService {
-        test(): string;
-      }
-      
-      const symbolToken = createToken<ITestService>('TestService');
-      const stringToken = createStringToken<ITestService>('TestServiceString');
-      const uniqueToken = createUniqueToken<ITestService>('UniqueService');
-      
-      assert.strictEqual(typeof symbolToken, 'symbol');
-      assert.strictEqual(typeof stringToken, 'string');
-      assert.strictEqual(typeof uniqueToken, 'symbol');
-      
-      // Symbol.for creates global symbols
-      const sameToken = createToken<ITestService>('TestService');
-      assert.strictEqual(symbolToken, sameToken);
-      
-      // Unique tokens are always different
-      const anotherUniqueToken = createUniqueToken<ITestService>('UniqueService');
-      assert.notStrictEqual(uniqueToken, anotherUniqueToken);
-    });
-    
-    it('should manage token registry', () => {
-      const registry = new TokenRegistry();
-      
-      interface IMyService {
-        getName(): string;
-      }
-      
-      const token1 = registry.create<IMyService>('MyService');
-      assert.ok(registry.has('MyService'));
-      
-      const token2 = registry.get<IMyService>('MyService');
-      assert.strictEqual(token1, token2);
-      
-      assert.throws(() => registry.create<IMyService>('MyService'), /already exists/);
-      
-      const token3 = registry.ensure<IMyService>('AnotherService');
-      assert.ok(registry.has('AnotherService'));
-      
-      assert.strictEqual(registry.size, 2);
-      assert.deepStrictEqual(registry.getNames().sort(), ['AnotherService', 'MyService']);
-      
-      registry.clear();
-      assert.strictEqual(registry.size, 0);
-    });
-  });
+  // Implementation tests moved to @codechu/flow-bootstrap package
+  // This package focuses on pure interface contracts only
 
   describe('IFlowScope', () => {
     it('should implement scoped dependency resolution interface', () => {
