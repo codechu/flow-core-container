@@ -38,7 +38,9 @@ jobs:
         run: npm test
 
       - name: 🏗️ Build package
-        run: npm run build
+        run: |
+          npm run build
+          echo "✅ Build successful - proceeding with release"
 
       - name: 🔍 Safe version detection with manual override
         id: version
