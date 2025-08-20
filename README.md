@@ -96,7 +96,7 @@ import {
 
 ### Container & Registry
 - `IFlowContainer` - Core dependency injection container
-- `IFlowScope` - **NEW in v1.1.0** - Scoped dependency resolution interface
+- `IFlowScope` - Scoped dependency resolution interface
 - `IFlowServiceRegistry` - Service registration management
 - `IFlowServiceResolver` - Advanced resolution with circular detection
 - `IFlowAdvancedContainer` - Full-featured container combining all capabilities
