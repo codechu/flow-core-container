@@ -289,4 +289,4 @@ Works with any DI container library:
 
 ## 📄 License
 
-MIT © Codechu
+MIT © Codechu# 🎯 Ready for automated v1.0.0 release!
