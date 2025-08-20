@@ -22,6 +22,16 @@
 npm install @codechu/flow-core-container
 ```
 
+## 🏗️ Architecture
+
+![Architecture Overview](./architecture-diagram.svg)
+
+The Flow Core Container follows a clean layered architecture. For detailed architectural information, see [ARCHITECTURE.md](./ARCHITECTURE.md).
+
+## 📋 Requirements & Scope
+
+For complete requirements, acceptance criteria, and project scope, see [REQUIREMENTS.md](./REQUIREMENTS.md).
+
 ## 🎯 Purpose
 
 Flow Core Container provides pure TypeScript interfaces for dependency injection and service location patterns with **zero implementation logic**. Build any IoC container implementation while maintaining complete type safety.
